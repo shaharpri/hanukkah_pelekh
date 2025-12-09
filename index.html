@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>כספת חנוכה</title>
   <style>
     * {
@@ -16,8 +17,6 @@
       color: #f5f5f5;
     }
 
-    /* === סצנות כלליות === */
-
     .scene {
       position: absolute;
       inset: 0;
@@ -29,8 +28,6 @@
       perspective: 1200px;
     }
 
-    /* === סצנת הכספת (מסך ראשון) === */
-
     .safe-scene {
       background: radial-gradient(circle at top, #555, #050505);
       flex-direction: column;
@@ -40,7 +37,8 @@
 
     .safe-header {
       text-align: center;
-      margin-top: 24px;
+      margin-top: 16px;
+      padding: 0 12px;
     }
 
     .safe-header h1 {
@@ -60,6 +58,7 @@
       align-items: center;
       gap: 18px;
       margin-top: 8px;
+      padding: 0 12px;
     }
 
     .safe-door {
@@ -134,8 +133,6 @@
         inset 0 0 4px rgba(255,255,255,0.7);
     }
 
-    /* סיבוב המחוג */
-
     .dial.spin {
       animation: spinDial 0.8s ease-out;
     }
@@ -180,7 +177,7 @@
       border: 1px solid #555;
       background: #151515;
       color: #f5f5f5;
-      min-width: 150px;
+      min-width: 160px;
       text-align: center;
       font-size: 1rem;
       box-shadow: 0 0 8px rgba(0,0,0,0.8);
@@ -242,8 +239,6 @@
       100% { transform: translateX(0); }
     }
 
-    /* === אפקט "נכנסים לתוך הכספת" === */
-
     body.into-safe .safe-scene {
       animation: zoomIntoSafe 1.2s forwards ease-in;
       pointer-events: none;
@@ -261,8 +256,6 @@
         filter: blur(12px);
       }
     }
-
-    /* === סצנת האוצר בתוך הכספת === */
 
     .treasure-scene {
       background: radial-gradient(circle at center, #1b1b1b, #000);
@@ -300,8 +293,6 @@
       padding: 30px 20px 40px;
     }
 
-    /* אור מתוך הכספת */
-
     .treasure-glow {
       position: absolute;
       top: 10%;
@@ -329,8 +320,6 @@
         transform: translateX(-50%) scale(1.05);
       }
     }
-
-    /* תיבת אוצר */
 
     .chest {
       position: relative;
@@ -408,8 +397,6 @@
       box-shadow: 0 0 6px rgba(0,0,0,0.7);
     }
 
-    /* ניצוצות */
-
     .sparkles {
       position: absolute;
       inset: 0;
@@ -454,8 +441,6 @@
       }
     }
 
-    /* טקסט בפנים */
-
     .treasure-title {
       position: relative;
       font-size: 1.7rem;
@@ -481,26 +466,65 @@
       font-size: 0.9rem;
     }
 
+    /* התאמות מובייל */
+
     @media (max-width: 600px) {
+      .safe-header h1 {
+        font-size: 1.6rem;
+      }
+      .safe-header .subtitle {
+        font-size: 0.85rem;
+      }
+      .safe-wrapper {
+        gap: 14px;
+        margin-top: 4px;
+      }
       .safe-door {
-        width: 230px;
-        height: 230px;
+        width: 210px;
+        height: 210px;
       }
       .dial {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
       }
-      .safe-header h1 {
-        font-size: 1.7rem;
+      .hinges {
+        right: -8px;
+        top: 32px;
+        gap: 12px;
+      }
+      input[type="text"] {
+        min-width: 140px;
+        font-size: 0.9rem;
+      }
+      button {
+        font-size: 0.9rem;
+        padding: 7px 14px;
       }
       .treasure-inner {
-        padding-inline: 16px;
+        padding: 20px 14px 28px;
+      }
+      .treasure-title {
+        font-size: 1.4rem;
+      }
+      .treasure-text {
+        font-size: 0.95rem;
+      }
+      .treasure-glow {
+        width: 320px;
+        height: 320px;
+      }
+      .chest {
+        width: 220px;
+        height: 155px;
+      }
+      .chest-base,
+      .chest-lid {
+        width: 220px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- סצנת הכספת -->
   <div class="scene safe-scene">
     <div class="safe-header">
       <h1>כספת החנוכה של הקיבוץ</h1>
@@ -533,7 +557,6 @@
     </div>
   </div>
 
-  <!-- סצנת האוצר בתוך הכספת -->
   <div class="scene treasure-scene">
     <div class="treasure-inner">
       <div class="treasure-glow"></div>
@@ -559,9 +582,7 @@
   </div>
 
   <script>
-    // === כאן אתה משנה רק את הקוד הסודי ואת הטקסט של האוצר ===
-
-    const SECRET_CODE = "8452"; // ← שנה לקוד שאתה בוחר עבור כל החידות יחד
+    const SECRET_CODE = "8452";
     const TREASURE_TEXT =
 `כל הכבוד! 🎉
 הנ״צ לחיפוש תיבת האוצר הוא:
@@ -569,8 +590,6 @@
 32.000000, 35.000000
 
 רמז: חפש ליד העץ הכי ותיק בקיבוץ...`;
-
-    // === קוד הלוגיקה והאנימציות ===
 
     const body = document.body;
     const codeInput = document.getElementById("codeInput");
@@ -586,7 +605,6 @@
 
     function spinDial() {
       dial.classList.remove("spin");
-      // טריק כדי לאפשר להפעיל את האנימציה שוב
       void dial.offsetWidth;
       dial.classList.add("spin");
     }
@@ -612,10 +630,8 @@
         messageEl.textContent = "הקוד נכון! פותחים את הכספת...";
         messageEl.classList.add("success");
 
-        // פתיחת דלת
         safeDoor.classList.add("open");
 
-        // כניסה קולנועית לתוך הכספת
         setTimeout(() => {
           body.classList.add("into-safe");
         }, 900);
